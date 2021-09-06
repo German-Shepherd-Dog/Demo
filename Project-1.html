@@ -273,7 +273,10 @@ labs(caption = &quot;Map tiles and data by OpenStreetMap&quot;)</code></pre>
 <div id="cartolight" class="section level2">
 <h2>Cartolight</h2>
 <p>A pleasant-looking map which as cooler tone than other maps.</p>
-<p>``` ggplot() + annotation_map_tile(zoomin = 0, progress = “none”, type = “cartolight”) + geom_sf(data = landmarks, color = “black”, fill = “deepskyblue”, size = 1) + labs(caption = “Map tiles and data by OpenStreetMap”)</p>
+<pre><code>ggplot() + 
+annotation_map_tile(zoomin = 0, progress = &quot;none&quot;, type = &quot;cartolight&quot;) + 
+geom_sf(data = landmarks, color = &quot;black&quot;, fill = &quot;deepskyblue&quot;, size = 1) +
+labs(caption = &quot;Map tiles and data by OpenStreetMap&quot;)</code></pre>
 </div>
 
 
