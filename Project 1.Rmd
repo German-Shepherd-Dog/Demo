@@ -9,6 +9,8 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+
+
 ## Our Solution
 
 We chose Washington D.C. as our target region for our analysis. Specifically, we were interested in providing geospatial data for bike tourists. Therefore, we downloaded geojson files for the following: 
@@ -17,41 +19,48 @@ We chose Washington D.C. as our target region for our analysis. Specifically, we
   ○ tree canopies (so that bikers can take rest after or in-between sightseeing).
 
 
+
 ## Install packages
 
-We first installed essential packages to plat geospatial data.
+We first installed essential packages to plot geospatial data.
 
+```{r read datasets, message= FALSE, results=hide, warning=FALSE}
+install.packages("tidyverse", quiet = TRUE)
+install.packages("sf", quiet = TRUE)
+install.packages("spData", quiet = TRUE)
+install.packages("ggthemes", quiet = TRUE)
+install.packages("ggspatial", quiet = TRUE)
+install.packages("Rcpp", quiet = TRUE)
 ```
-install.packages("tidyverse")
-install.packages("sf")
-install.packages("spData")
-install.packages("ggthemes")
-install.packages("ggspatial")
-install.packages("Rcpp")
-```
+
+
 
 ## Import libraries
 
 After installing core packages, we must import relevant libraries
 to use the functions utilizable in our assignment.
 
+```{r read datasets, message= FALSE, results=hide, warning=FALSE}
+library(tidyverse, quiet = TRUE)
+library(sf, quiet = TRUE)
+library(spData, quiet = TRUE)
+library(ggthemes, quiet = TRUE)
+library(ggspatial, quiet = TRUE)
 ```
-library(tidyverse)
-library(sf)
-library(spData)
-library(ggthemes)
-library(ggspatial)
-```
+
+
 
 ## Loading datasets
 
 As we downloaded geospatial files in geoJSON files, we must read them. 
 
+```{r read datasets, message= FALSE, results=hide, warning=FALSE}
+bikelanes <- st_read("Bike Trails.geojson", quiet = TRUE)
+landmarks <- st_read("Potential Landmarks.geojson", quiet = TRUE)
+canopy <- st_read("Tree Canopy.geojson", quiet = TRUE)
 ```
-bikelanes <- st_read("Bike Trails.geojson")
-landmarks <- st_read("Potential Landmarks.geojson")
-canopy <- st_read("Tree Canopy.geojson")
-```
+
+
 
 ## Draw by appropriate layer order and color combinations
 
@@ -61,7 +70,7 @@ Also, we considered removing the gray background and painted it with white.
 
 Last, we erased the longitude and latidue for cleaner look.
 
-```
+```{r read datasets, message= FALSE, results=hide, warning=FALSE}
 ggplot() +
 geom_sf(data = canopy, aes(color = "Canopies")) +
 geom_sf(data = landmarks, aes(fill = "Historic Landmarks"), color = NA) +
@@ -71,33 +80,39 @@ scale_color_manual(values = c("darkred", "forestgreen"), name = "") +
 theme_void()
 ```
 
+
+
 ## Default OSM basemap
 
 Oftentimes, the default basemap has the most tidy look.
 
-```
+```{r read datasets, message= FALSE, results=hide, warning=FALSE}
 ggplot() + 
 annotation_map_tile(zoomin = 0, progress = "none") + 
 geom_sf(data = landmarks, color = "darkred", fill = "white") +
 labs(caption = "Map tiles and data by OpenStreetMap")
 ```
 
+
+
 ## Hotstyle
 
 Our team found that the Hotstyle seems pretty useless.
 
-```
+```{r read datasets, message= FALSE, results=hide, warning=FALSE}
 ggplot() + 
 annotation_map_tile(zoomin = 0, progress = "none", type = "hotstyle") + 
 geom_sf(data = bikelanes, color = "black") +
 labs(caption = "Map tiles and data by OpenStreetMap")
 ```
 
+
+
 ## HikeBike
 
 HikeBike is useful in showing bikelanes along with those of adjacent cities.
 
-```
+```{r read datasets, message= FALSE, results=hide, warning=FALSE}
 ggplot() + 
 annotation_map_tile(zoomin = 0, progress = "none", type = "hikebike") + 
 geom_sf(data = bikelanes, color = "darkblue", size = 1) +
@@ -105,22 +120,25 @@ labs(caption = "Map tiles and data by OpenStreetMap")
 ```
 
 
+
 ## OSM Grayscale
 
 This map has a newspaper look, providing more comfort to the eyes.
 
-```
+```{r read datasets, message= FALSE, results=hide, warning=FALSE}
 ggplot() + 
 annotation_map_tile(zoomin = 0, progress = "none", type = "osmgrayscale") + 
 geom_sf(data = bikelanes, color = "darkred", size = 1) +
 labs(caption = "Map tiles and data by OpenStreetMap")
 ```
 
+
+
 ## Stamen black/white
 
 Simpler version of Stamen basemap.
 
-```
+```{r read datasets, message= FALSE, results=hide, warning=FALSE}
 ggplot() + 
 annotation_map_tile(zoomin = 0, progress = "none", type = "stamenbw") + 
 geom_sf(data = canopy, color = "forestgreen") +
@@ -128,11 +146,12 @@ labs(caption = "Map tiles by Stament Design and data by OpenStreetMap")
 ```
 
 
+
 ## Stamen watercolor
 
 A picturesque map.
 
-```
+```{r read datasets, message= FALSE, results=hide, warning=FALSE}
 ggplot() + 
 annotation_map_tile(zoomin = 0, progress = "none", type = "stamenwatercolor") + 
 geom_sf(data = bikelanes, color = "darkred", size = 1) +
@@ -140,23 +159,27 @@ labs(caption = "Map tiles by Stament Design and data by OpenStreetMap")
 ```
 
 
+
 ## Cartodark
 
 This map is also useless, but at least it looks catchy like a cartoon.
 
-```
+```{r read datasets, message= FALSE, results=hide, warning=FALSE}
 ggplot() + 
 annotation_map_tile(zoomin = 0, progress = "none", type = "cartodark") + 
 geom_sf(data = landmarks, color = "goldenrod1", fill = "yellow", size = 1) +
 labs(caption = "Map tiles and data by OpenStreetMap")
 ```
 
+
+
 ## Cartolight
 
-A pleasant-looking map which as cooler tone than other maps. 
+A pleasant-looking map which has cooler tone than other maps. 
 
-```
+```{r read datasets, message= FALSE, results=hide, warning=FALSE}
 ggplot() + 
 annotation_map_tile(zoomin = 0, progress = "none", type = "cartolight") + 
 geom_sf(data = landmarks, color = "black", fill = "deepskyblue", size = 1) +
 labs(caption = "Map tiles and data by OpenStreetMap")
+```
